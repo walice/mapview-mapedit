@@ -28,8 +28,11 @@ library(raster)
 
 The `sb-tweets` shapefile is a spatial dataframe of tweets from Santa Barbara  between September & November of 2019.
 
+Check Jamie's tutorial on how to turn CSV with lat-long into spatial object.
+
 ```{r load_tweets}
 sb_tweets <- read_sf("data/sb-tweets.shp")
+head(sb_tweets)
 ```
 
 Time for `mapview`
@@ -42,6 +45,11 @@ Play with color
 
 ```{r}
 mapview(sb_tweets, zcol = "usr_typ")
+```
+
+```{r}
+# Can also use it with continuous variable
+mapview(sb_tweets, zcol = "Day")
 ```
 
 ```{r}
@@ -121,5 +129,7 @@ and had to install it before it worked...
 map <- mapview(sb_tweets, zcol = "usr_typ")
 
 mapshot(map, file = "sb_tweet_map.png")
+mapshot(map, file = "sb_tweet_map.html")
+mapshot(map, file = "sb_tweet_map.svg")
 ```
 

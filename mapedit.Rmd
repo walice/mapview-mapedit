@@ -3,6 +3,8 @@ title: "mapedit"
 author: "Jamie Montgomery"
 date: "2/4/2020"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Overview
@@ -28,6 +30,9 @@ The `seaweed_range_lines` shapefile contains multiple polyline objects that iden
 
 ```{r}
 seaweed <- read_sf("data/seaweed_range_lines.shp")
+head(seaweed)
+plot(seaweed)
+mapview(seaweed)
 ```
 
 ## Create a spatial object from scratch
@@ -35,12 +40,15 @@ seaweed <- read_sf("data/seaweed_range_lines.shp")
 Open up a blank leaflet map using the `editMap()` function and begin building lines, polygons or points. When done click finished and you have a list. To get the final as a simple feature select the data $finished.
 
 ```{r}
-
+# Create blank map using leaflet()
 seaweed_lines <- editMap(leaflet() %>% addTiles())
 sw_lines <- seaweed_lines$finished
 
+mapview(sw_lines)
+class(sw_lines)
+
 #save using write_sf
-write_sf(sw_lines, "../../Data/seaweed_range_lines", driver = "ESRI Shapefile")
+write_sf(sw_lines, "Data/seaweed_range_lines", driver = "ESRI Shapefile")
 ```
 
 ## Edit a shapefile
@@ -51,5 +59,9 @@ Let's edit the seaweed lines shapefile
 ```{r}
 new_lines <- mapview(seaweed) %>%
   editMap("seaweed")
+# Make sure to click Save and then Done when you edit
+
+# Then plot new shapefile using $all
+mapview(new_lines$all)
 ```
 
